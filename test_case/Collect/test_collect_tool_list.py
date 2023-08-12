@@ -12,7 +12,7 @@ from utils.read_files_tools.regular_control import regular
 from utils.requests_tool.teardown_control import TearDownHandler
 
 
-case_id = ['collect_tool_list_01']
+case_id = ['collect_tool_list_01','collect_tool_list_02']
 TestData = GetTestCase.case_data(case_id)
 re_data = regular(str(TestData))
 
@@ -35,4 +35,4 @@ class TestCollectToolList:
 
 
 if __name__ == '__main__':
-    pytest.main(['test_collect_tool_list.py', '-s', '-W', 'ignore:Module already imported:pytest.PytestWarning'])
+    pytest.main(['test_collect_tool_list.py', '-s','-v', '-W', 'ignore:Module already imported:pytest.PytestWarning'])

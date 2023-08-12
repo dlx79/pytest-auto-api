@@ -17,10 +17,10 @@ class Cache:
     def __init__(self, filename: Union[Text, None]) -> None:
         # 如果filename不为空，则操作指定文件内容
         if filename:
-            self.path = ensure_path_sep("\\cache" + filename)
+            self.path = ensure_path_sep("/cache" + filename)
         # 如果filename为None，则操作所有文件内容
         else:
-            self.path = ensure_path_sep("\\cache")
+            self.path = ensure_path_sep("/cache")
 
     def set_cache(self, key: Text, value: Any) -> None:
         """
@@ -63,7 +63,7 @@ class Cache:
         清除所有缓存文件
         :return:
         """
-        cache_path = ensure_path_sep("\\cache")
+        cache_path = ensure_path_sep("/cache")
 
         # 列出目录下所有文件，生成一个list
         list_dir = os.listdir(cache_path)
@@ -75,6 +75,7 @@ class Cache:
 _cache_config = {}
 
 
+# cookies 存入字典和获取字典
 class CacheHandler:
     @staticmethod
     def get_cache(cache_data):

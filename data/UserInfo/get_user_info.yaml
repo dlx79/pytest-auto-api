@@ -33,6 +33,6 @@ get_user_info_01:
       username:
         jsonpath: $.data.userInfo.username
         type: ==
-        value: '18800000001'
+        value: '18717713202'
         AssertType:
     sql:

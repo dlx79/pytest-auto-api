@@ -8,6 +8,7 @@
 import os
 
 
+# 删除文件
 def del_file(path):
     """删除目录下的文件"""
     list_path = os.listdir(path)

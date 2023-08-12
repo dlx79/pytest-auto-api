@@ -32,6 +32,7 @@ class RequestControl:
     """ 封装请求 """
 
     def __init__(self, yaml_case):
+        # 获取字典值转为 key=value模式，__yaml_case.key=value
         self.__yaml_case = TestCase(**yaml_case)
 
     def file_data_exit(
@@ -141,7 +142,7 @@ class RequestControl:
         self.file_data_exit(file_data)
         _data = self.__yaml_case.data
         for key, value in ast.literal_eval(cache_regular(str(_data)))['file'].items():
-            file_path = ensure_path_sep("\\Files\\" + value)
+            file_path = ensure_path_sep("/Files/" + value)
             file_data[key] = (value, open(file_path, 'rb'), 'application/octet-stream')
             _files.append(file_data)
             # allure中展示该附件
@@ -290,7 +291,7 @@ class RequestControl:
             stream=False,
             data={},
             **kwargs)
-        filepath = os.path.join(ensure_path_sep("\\Files\\"), self.get_export_api_filename(res))  # 拼接路径
+        filepath = os.path.join(ensure_path_sep("/Files/"), self.get_export_api_filename(res))  # 拼接路径
         if res.status_code == 200:
             if res.text:  # 判断文件内容是否为空
                 with open(filepath, 'wb') as file:
@@ -324,11 +325,7 @@ class RequestControl:
             sql_data = {"sql": None}
         return sql_data
 
-    def _check_params(
-            self,
-            res,
-            yaml_data: "TestCase",
-    ) -> "ResponseData":
+    def _check_params( self,res,yaml_data: "TestCase") -> "ResponseData":
         data = ast.literal_eval(cache_regular(str(yaml_data.data)))
         _data = {
             "url": res.url,
@@ -400,12 +397,14 @@ class RequestControl:
             RequestType.EXPORT.value: self.request_type_for_export
         }
 
-        # 判断用例是否执行
+        # 判断用例是否执行,当 is_run 为True 和 None 才执行
         if self.__yaml_case.is_run is True or self.__yaml_case.is_run is None:
-            # 处理多业务逻辑
-            if dependent_switch is True:
-                DependentCase(self.__yaml_case).get_dependent_data()
 
+            # 处理多业务逻辑,是 true 处理
+            if dependent_switch is True:
+
+                DependentCase(self.__yaml_case).get_dependent_data()
+            # todo
             res = requests_type_mapping.get(self.__yaml_case.requestType)(
                 headers=self.__yaml_case.headers,
                 method=self.__yaml_case.method,
@@ -414,11 +413,11 @@ class RequestControl:
 
             if self.__yaml_case.sleep is not None:
                 time.sleep(self.__yaml_case.sleep)
-
+            # 返回ResponseData
             _res_data = self._check_params(
                 res=res,
                 yaml_data=self.__yaml_case)
-
+            #
             self.api_allure_step(
                 url=_res_data.url,
                 headers=str(_res_data.headers),

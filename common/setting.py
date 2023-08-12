@@ -1,8 +1,3 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-# @Time   : 2021/11/25 13:07
-# @Author : 余少琪
-
 import os
 from typing import Text
 
@@ -14,7 +9,9 @@ def root_path():
 
 
 def ensure_path_sep(path: Text) -> Text:
-    """兼容 windows 和 linux 不同环境的操作系统路径 """
+    """兼容 windows 和 linux 不同环境的操作系统路径
+     获取的是根路径和相对路径
+    """
     if "/" in path:
         path = os.sep.join(path.split("/"))
 

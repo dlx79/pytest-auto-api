@@ -17,6 +17,7 @@ class GetYamlData:
     def __init__(self, file_dir):
         self.file_dir = str(file_dir)
 
+    # 获取 ymal数据 返回字典
     def get_yaml_data(self) -> dict:
         """
         获取 yaml 中的数据
@@ -25,8 +26,8 @@ class GetYamlData:
         """
         # 判断文件是否存在
         if os.path.exists(self.file_dir):
-            data = open(self.file_dir, 'r', encoding='utf-8')
-            res = yaml.load(data, Loader=yaml.FullLoader)
+            with open(self.file_dir, 'r', encoding='utf-8') as data:
+                res = yaml.load(data, Loader=yaml.FullLoader)
         else:
             raise FileNotFoundError("文件路径不存在")
         return res

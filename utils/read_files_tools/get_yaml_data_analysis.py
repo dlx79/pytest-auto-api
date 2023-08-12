@@ -28,14 +28,13 @@ class CaseData:
         else:
             raise FileNotFoundError("用例地址未找到")
 
-    def case_process(
-            self,
-            case_id_switch: Union[None, bool] = None):
+    def case_process(self,case_id_switch: Union[None, bool] = None):
         """
         数据清洗之后，返回该 yaml 文件中的所有用例
         @param case_id_switch: 判断数据清洗，是否需要清洗出 case_id, 主要用于兼容用例池中的数据
         :return:
         """
+        # 获取 ymal数据 返回字典
         dates = GetYamlData(self.file_path).get_yaml_data()
         case_lists = []
         for key, values in dates.items():
@@ -405,5 +404,5 @@ class GetTestCase:
 
 
 if __name__ == '__main__':
-    a = CaseData(r'D:\work_code\pytest-auto-api2\data\Collect\collect_addtool.yaml').case_process()
+    a = CaseData(r'/Users/lixiang/Documents/lixiang/接口自动化-7月/pytest-auto-api2/data/Collect/collect_addtool.yaml').case_process()
     print(a)

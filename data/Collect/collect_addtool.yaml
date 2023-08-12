@@ -18,7 +18,7 @@ collect_addtool_01:
     is_run:
     data:
       name: 自动化
-      link: https://gitee.com/yu_xiao_qi/pytest-auto-api2
+      link: https://www.baidu.com/
 
     dependence_case: False
     # 依赖的数据
@@ -36,7 +36,7 @@ collect_addtool_01:
       - type: response
         jsonpath: $.data.id
         # 自定义的缓存名称
-        name: yushaoqi_sql
+        name: baidu_cache
     sql:
     teardown:
       - case_id: collect_delete_tool_01

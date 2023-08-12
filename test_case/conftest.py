@@ -18,7 +18,7 @@ from utils.cache_process.cache_control import CacheHandler
 @pytest.fixture(scope="session", autouse=False)
 def clear_report():
     """如clean命名无法删除报告，这里手动删除"""
-    del_file(ensure_path_sep("\\report"))
+    del_file(ensure_path_sep("/report"))
 
 
 @pytest.fixture(scope="session", autouse=True)
@@ -30,7 +30,7 @@ def work_login_init():
 
     url = "https://www.wanandroid.com/user/login"
     data = {
-        "username": 18800000001,
+        "username": 18717713202,
         "password": 123456
     }
     headers = {'Content-Type': 'application/x-www-form-urlencoded'}
@@ -48,19 +48,23 @@ def work_login_init():
     CacheHandler.update_cache(cache_name='login_cookie', value=cookies)
 
 
+
 def pytest_collection_modifyitems(items):
     """
     测试用例收集完成时，将收集到的 item 的 name 和 node_id 的中文显示在控制台上
     :return:
     """
     for item in items:
+        # 修改编码方式 防止在控制台出现乱码
         item.name = item.name.encode("utf-8").decode("unicode_escape")
         item._nodeid = item.nodeid.encode("utf-8").decode("unicode_escape")
 
     # 期望用例顺序
     # print("收集到的测试用例:%s" % items)
-    appoint_items = ["test_get_user_info", "test_collect_addtool", "test_Cart_List", "test_ADD", "test_Guest_ADD",
-                     "test_Clear_Cart_Item"]
+    # appoint_items = ["test_get_user_info", "test_collect_addtool", "test_Cart_List", "test_ADD", "test_Guest_ADD",
+    #                  "test_Clear_Cart_Item"]
+    appoint_items = ["test_get_user_info", "test_collect_delete_tool", "test_collect_tool_list", "test_collect_update_tool", "test_login",
+                     "test_collect_addtool"]
 
     # 指定运行顺序
     run_items = []

@@ -21,7 +21,7 @@ def get_excel_data(sheet_name: str, case_name: any) -> list:
     """
     res_list = []
 
-    excel_dire = ensure_path_sep("\\data\\TestLogin.xls")
+    excel_dire = ensure_path_sep("/data/TestLogin.xls")
     work_book = xlrd.open_workbook(excel_dire, formatting_info=True)
 
     # 打开对应的子表

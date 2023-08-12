@@ -23,10 +23,10 @@ def run():
         INFO.logger.info(
             """
                              _    _         _      _____         _
-              __ _ _ __ (_)  / \\  _   _| |_ __|_   _|__  ___| |_
-             / _` | '_ \\| | / _ \\| | | | __/ _ \\| |/ _ \\/ __| __|
-            | (_| | |_) | |/ ___ \\ |_| | || (_) | |  __/\\__ \\ |_
-             \\__,_| .__/|_/_/   \\_\\__,_|\\__\\___/|_|\\___||___/\\__|
+              __ _ _ __ (_)  / /  _   _| |_ __|_   _|__  ___| |_
+             / _` | '_ /| | / _ /| | | | __/ _ /| |/ _ // __| __|
+            | (_| | |_) | |/ ___ / |_| | || (_) | |  __//__ / |_
+             /__,_| .__/|_/_/   /_/__,_|/__/___/|_|/___||___//__|
                   |_|
                   开始执行{}项目...
                 """.format(config.project_name)
@@ -35,7 +35,7 @@ def run():
         # 判断现有的测试用例，如果未生成测试代码，则自动生成
         # TestCaseAutomaticGeneration().get_case_automatic()
 
-        pytest.main(['-s', '-W', 'ignore:Module already imported:pytest.PytestWarning',
+        pytest.main(['-s','-v', '-W', 'ignore:Module already imported:pytest.PytestWarning',
                      '--alluredir', './report/tmp', "--clean-alluredir"])
 
         """
@@ -49,7 +49,13 @@ def run():
                    --maxfail: 设置最大失败次数，当超出这个阈值时，则不会在执行测试用例
                     "--reruns=3", "--reruns-delay=2"
                    """
-
+        """
+        r: 这是一个原始字符串的前缀，表示后面的字符串内容应该按照字面意义进行解释，不对反斜杠进行转义。
+        这在处理文件路径等情况下很有用。
+        ./report/tmp: 这是输入路径，指定要生成报告的数据源。这个路径相对于当前工作目录。
+        -o ./report/html: 这是输出路径，指定生成的报告应该保存的位置。这个路径也是相对于当前工作目录的.
+        --clean: 这是一个选项，可能用于在生成报告之前清理目标文件夹，以确保生成的报告是从头开始生成的.
+        """
         os.system(r"allure generate ./report/tmp -o ./report/html --clean")
 
         allure_data = AllureFileClean().get_case_count()
@@ -67,13 +73,13 @@ def run():
             ErrorCaseExcel().write_case()
 
         # 程序运行之后，自动启动报告，如果不想启动报告，可注释这段代码
-        os.system(f"allure serve ./report/tmp -h 127.0.0.1 -p 9999")
+        # os.system(f"allure serve ./report/tmp -h 127.0.0.1 -p 56702")
 
     except Exception:
         # 如有异常，相关异常发送邮件
-        e = traceback.format_exc()
-        send_email = SendEmail(AllureFileClean.get_case_count())
-        send_email.error_mail(e)
+        # e = traceback.format_exc()
+        # send_email = SendEmail(AllureFileClean.get_case_count())
+        # send_email.error_mail(e)
         raise
 
 

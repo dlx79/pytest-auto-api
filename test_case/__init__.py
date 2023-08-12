@@ -15,7 +15,7 @@ def write_case_process():
     """
 
     # 循环拿到所有存放用例的文件路径
-    for i in get_all_files(file_path=ensure_path_sep("\\data"), yaml_data_switch=True):
+    for i in get_all_files(file_path=ensure_path_sep("/data"), yaml_data_switch=True):
         # 循环读取文件中的数据
         case_process = CaseData(i).case_process(case_id_switch=True)
         if case_process is not None:
@@ -24,6 +24,7 @@ def write_case_process():
                 for k, v in case.items():
                     # 判断 case_id 是否已存在
                     case_id_exit = k in _cache_config.keys()
+                    print('case_id_exit=',case_id_exit)
                     # 如果case_id 不存在，则将用例写入缓存池中
                     if case_id_exit is False:
                         CacheHandler.update_cache(cache_name=k, value=v)

@@ -172,18 +172,27 @@ def regular(target):
     :return:
     """
     try:
+        # 用于匹配以${{...}}包裹的文本
         regular_pattern = r'\${{(.*?)}}'
+        # 进入一个循环，如果目标字符串中仍然存在符合正则表达式regular_pattern的文本块，则继续循环处理
         while re.findall(regular_pattern, target):
+            # 搜索目标字符串中的第一个匹配项，并从中提取出括号内的内容，保存在变量key中
             key = re.search(regular_pattern, target).group(1)
             value_types = ['int:', 'bool:', 'list:', 'dict:', 'tuple:', 'float:']
             if any(i in key for i in value_types) is True:
+                # 从key中提取出函数名
                 func_name = key.split(":")[1].split("(")[0]
+                # 从key中提取出函数参数列表，并去掉参数列表末尾的括号
                 value_name = key.split(":")[1].split("(")[1][:-1]
                 if value_name == "":
+                    # 使用 getattr 内置函数，从 Context 类的对象中获取指定名称 func_name 对应的属性或方法。
+                    # 这里，func_name 是一个字符串，表示函数名，在得到指定的函数之后，通过 () 运算符调用这个函数，执行其代码块
                     value_data = getattr(Context(), func_name)()
                 else:
+                    # 根据得到的参数用,切割得到列表 获取返回值
                     value_data = getattr(Context(), func_name)(*value_name.split(","))
                 regular_int_pattern = r'\'\${{(.*?)}}\''
+                # 来匹配单引号包裹的${{...}}形式，将其替换为获取的数据类型返回值
                 target = re.sub(regular_int_pattern, str(value_data), target, 1)
             else:
                 func_name = key.split("(")[0]
@@ -193,6 +202,7 @@ def regular(target):
                 else:
                     value_data = getattr(Context(), func_name)(*value_name.split(","))
                 target = re.sub(regular_pattern, str(value_data), target, 1)
+        # 返回经过正则替换后的目标字符串
         return target
 
     except AttributeError:
