@@ -5,7 +5,7 @@ from utils.other_tools.models import Config
 
 
 _data = GetYamlData(ensure_path_sep("/common/config.yaml")).get_yaml_data()
-print(_data)
+print('_data=',_data)
 '''
 from pydantic import BaseModel
 class Person(BaseModel):
@@ -19,5 +19,5 @@ person = Person(**person_data)
 print(person.name)  # 输出: Alice
 '''
 config = Config(**_data)
-print(config)
+print('config=',config)
 

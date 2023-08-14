@@ -11,6 +11,7 @@ from typing import Text
 import colorlog
 import time
 from common.setting import ensure_path_sep
+from loguru import logger
 
 
 class LogHandler:
@@ -71,6 +72,7 @@ class LogHandler:
         formatter = colorlog.ColoredFormatter(
             '%(log_color)s[%(asctime)s] [%(name)s] [%(levelname)s]: %(message)s',
             log_colors=log_colors_config
+
         )
         return formatter
 
@@ -80,5 +82,9 @@ INFO = LogHandler(ensure_path_sep(f"/logs/info-{now_time_day}.log"), level='info
 ERROR = LogHandler(ensure_path_sep(f"/logs/error-{now_time_day}.log"), level='error')
 WARNING = LogHandler(ensure_path_sep(f'/logs/warning-{now_time_day}.log'))
 
+logger.info(ensure_path_sep(f"/logs/info-{now_time_day}.log"))
+
 if __name__ == '__main__':
     ERROR.logger.error("测试")
+    INFO.logger.info('test')
+

@@ -8,7 +8,7 @@
 """
 from functools import wraps
 from utils.logging_tool.log_control import INFO, ERROR
-
+from loguru import logger
 
 def log_decorator(switch: bool):
     """
@@ -37,10 +37,13 @@ def log_decorator(switch: bool):
                 _is_run = res.is_run
                 # 判断正常打印的日志，控制台输出绿色
                 if _is_run in (True, None) and res.status_code == 200:
-                    INFO.logger.info(_log_msg)
+                    # INFO.logger.info(_log_msg)
+                    logger.info(_log_msg)
                 else:
                     # 失败的用例，控制台打印红色
-                    ERROR.logger.error(_log_msg)
+                    # ERROR.logger.error(_log_msg)
+                    logger.error(_log_msg)
+
             return res
         return swapper
     return decorator

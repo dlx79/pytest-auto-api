@@ -25,3 +25,6 @@ def get_host_ip():
         _s.close()
 
     return l_host
+
+g=get_host_ip()
+print(g)

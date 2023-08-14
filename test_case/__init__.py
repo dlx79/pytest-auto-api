@@ -24,7 +24,7 @@ def write_case_process():
                 for k, v in case.items():
                     # 判断 case_id 是否已存在
                     case_id_exit = k in _cache_config.keys()
-                    print('case_id_exit=',case_id_exit)
+                    # print('case_id_exit=',case_id_exit)
                     # 如果case_id 不存在，则将用例写入缓存池中
                     if case_id_exit is False:
                         CacheHandler.update_cache(cache_name=k, value=v)

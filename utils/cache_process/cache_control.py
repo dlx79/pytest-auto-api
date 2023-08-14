@@ -78,8 +78,10 @@ _cache_config = {}
 # cookies 存入字典和获取字典
 class CacheHandler:
     @staticmethod
-    def get_cache(cache_data):
-        return _cache_config[cache_data]
+    # def get_cache(cache_data):
+    #     return _cache_config[cache_data]
+    def get_cache(cache_data,default=None):
+        return _cache_config.get(cache_data,default)
 
     @staticmethod
     def update_cache(*, cache_name, value):

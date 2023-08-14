@@ -36,7 +36,7 @@ def run():
         # TestCaseAutomaticGeneration().get_case_automatic()
 
         pytest.main(['-s','-v', '-W', 'ignore:Module already imported:pytest.PytestWarning',
-                     '--alluredir', './report/tmp', "--clean-alluredir"])
+                     "--alluredir=./report/tmp"])
 
         """
                    --reruns: 失败重跑次数
